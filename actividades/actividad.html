@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutorial HTML Canvas</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      background-color: #f8fafc;
+      color: #1e293b;
+    }
+    canvas {
+      background-color: #ffffff;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1rem;
+    }
+    button {
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      background-color: #0284c7;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    button:hover {
+      background-color: #0369a1;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Demostración de HTML &lt;canvas&gt;</h1>
+  
+  <!-- Canvas con dimensiones explícitas -->
+  <canvas id="lienzo" width="500" height="300"></canvas>
+  
+  <!-- Botón de descarga -->
+  <button id="btnDescargar">Descargar Imagen</button>
+
+  <script>
+    const canvas = document.getElementById('lienzo');
+    const ctx = canvas.getContext('2d');
+    const btnDescargar = document.getElementById('btnDescargar');
+
+    // Fondo degradado
+    const gradiente = ctx.createLinearGradient(0, 0, 500, 300);
+    gradiente.addColorStop(0, '#0f172a');
+    gradiente.addColorStop(1, '#334155');
+    ctx.fillStyle = gradiente;
+    ctx.fillRect(0, 0, 500, 300);
+
+    // Círculo decorativo central
+    ctx.beginPath();
+    ctx.arc(250, 130, 60, 0, Math.PI * 2);
+    ctx.fillStyle = '#38bdf8';
+    ctx.fill();
+
+    // Texto personalizado
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 22px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText('¡Canvas exportado con éxito!', 250, 240);
+
+    // Lógica para exportar y descargar la imagen
+    btnDescargar.addEventListener('click', () => {
+      // 1. Obtener la representación de la imagen en formato DataURL
+      const imagenUrl = canvas.toDataURL('image/png');
+
+      // 2. Crear un enlace temporal en memoria
+      const enlace = document.createElement('a');
+      enlace.download = 'mi-dibujo-canvas.png'; // Nombre asignado al archivo
+      enlace.href = imagenUrl;
+
+      // 3. Simular el clic para iniciar la descarga inmediata
+      enlace.click();
+    });
+  </script>
+
+</body>
+</html>
